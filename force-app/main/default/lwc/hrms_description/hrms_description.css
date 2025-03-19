@@ -1,90 +1,160 @@
-body {
+* {
     margin: 0;
     padding: 0;
-    font-family: 'times new roman', sans-serif;
-    background: #0a0a0a;
-    color: #f1c40f;
     box-sizing: border-box;
 }
-    
-.campaign-poster {
+
+body, html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
     display: flex;
     justify-content: center;
     align-items: center;
-   overflow: hidden;
-    background: url('https://source.unsplash.com/1600x900/?dark,office') no-repeat center center/cover;
-    text-align: center;
+    overflow: hidden;
+    color: #333;
 }
 
+/* Main Container */
+.campaign-poster {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.9));
+}
+
+/* Glassmorphism Effect */
 .poster-content {
-    background: rgba(20, 20, 20, 0.6);
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
     padding: 50px;
-    border-radius: 12px;
-    width:100vw;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(12px);
-   
+    width: 80vw;
+    max-width: 1200px;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    border: 2px solid rgba(255, 204, 0, 0.5);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
+/* Gradient Title */
 .campaign-title {
     font-size: 3rem;
     font-weight: bold;
-    color: #f1c40f;
-    margin-bottom: 10px;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
 }
 
+/* Description Stays Fixed */
 .campaign-description {
     font-size: 1.2rem;
-    color: #dddddd;
-    margin-bottom: 25px;
-    line-height: 1.8;
-    font-weight: 300;
+    font-weight: 400;
+    color: #555;
+    width: 90%;
+    max-width: 1000px;
+    line-height: 1.6;
+    text-align: justify;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-p {
+/* Information Boxes */
+.campaign-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 15px;
+}
+
+.campaign-info p {
+    flex: 1;
     font-size: 1.1rem;
-    color: #bbbbbb;
-    margin: 10px 0;
+    color: #333;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-strong {
-    color: #f1c40f;
-    font-weight: 600;
-}
-
+/* Buttons */
 .button-group {
     display: flex;
     justify-content: center;
-    gap: 25px;
-    margin-top: 30px;
+    gap: 20px;
+    margin-top: 20px;
 }
 
-lightning-button {
-    transition: all 0.3s ease;
-   
-    color: #0a0a0a;
-    border-radius: 8px;
-    padding: 12px 20px;
-    font-size: 1.1rem;
+.button {
+    transition: all 0.3s ease-in-out;
+    font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
+    padding: 14px 30px;
+    border-radius: 50px;
+    background: linear-gradient(90deg, #0072ff, #00c6ff);
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 183, 255, 0.3);
+    cursor: pointer;
+    border: none;
+    outline: none;
 }
 
-lightning-button:hover {
-   
-    transform: scale(1.08);
+.button:hover {
+    transform: scale(1.1);
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    box-shadow: 0 4px 12px rgba(0, 183, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .poster-content {
+        width: 90vw;
+        height: 90vh;
+        padding: 35px;
+    }
+
+    .campaign-title {
+        font-size: 2.6rem;
+    }
+
+    .campaign-info {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 768px) {
     .poster-content {
-        max-width: 95%;
+        width: 95vw;
+        height: 95vh;
         padding: 30px;
     }
 
-    .campaign-title {   
-        font-size: 2.5rem;
+    .campaign-title {
+        font-size: 2.2rem;
+    }
+
+    .campaign-description {
+        font-size: 1rem;
+    }
+
+    .button {
+        font-size: 0.9rem;
+        padding: 10px 20px;
     }
 }
