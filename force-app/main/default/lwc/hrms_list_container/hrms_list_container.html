@@ -1,0 +1,45 @@
+<template>
+ <template if:true={isListVisible}>
+    <lightning-card title="Active Job Campaigns">
+
+            <template if:true={campaigns}>
+                <div class="campaign-container">
+                    <template for:each={campaigns} for:item="camp">
+                        <div key={camp.Id} class="campaign-card" onclick={handleCampaignClick} data-id={camp.Id}>
+                            <div class="campaign-header">
+                                <h2>{camp.Name}</h2>  <!-- Job Name as a clear heading -->
+                            </div>
+                            <p class="campaign-description">{camp.Job_Description__c}</p>  <!-- Job Description -->
+                            
+                            <div class="campaign-details">
+                                <div class="campaign-column">
+                                    <strong>Education:</strong> {camp.Education__c}
+                                </div>
+                                <div class="campaign-column">
+                                    <strong>Salary:</strong> {camp.Salary__c}
+                                </div>
+                            </div>
+
+                            <div class="campaign-details">
+                                <div class="campaign-column">
+                                <strong>Experience:</strong> {camp.Experience__c}
+                            </div>
+                            <div class="campaign-column">
+                                <strong>Job Mode:</strong> {camp.Job_Mode__c}
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <template if:true={error}>
+            <p class="slds-text-color_error">Error loading campaigns</p>
+        </template>
+    </lightning-card>
+ </template>
+       
+       <template if:false={isListVisible}>
+        <c-hrms_description campaignid={selectedCampaignId} onbackbtnclick={backToList} ></c-hrms_description>
+
+</template>

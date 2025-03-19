@@ -1,0 +1,29 @@
+    <template>
+        <template if:true={campaign}>
+            <div class="campaign-poster">
+                <div class="poster-content">
+                    <h1 class="campaign-title">{campaign.Name}</h1>
+                    <pre class="campaign-description">{campaign.Description}</pre>
+                    <p><strong>Start Date:</strong> {campaign.StartDate}</p>
+                    <p><strong>End Date:</strong> {campaign.EndDate}</p>
+                    <div class="campaign-description"  style="display: flex; margin:auto ; justify-content: center" >
+                        <!-- <strong>Education:</strong> {campaing.Education__c}; -->
+                        <strong>Salary:</strong> {campaign.Salary__c};
+                        
+                        <strong>Experience:</strong> {campaign.Experience__c} 
+                        <strong>Job Mode:</strong> {campaign.Job_Mode__c}
+                        <strong>Job Location:</strong> {campaign.Job_Location__c}
+                    </div>
+                        
+                    <div class="button-group">
+                        <lightning-button label="Apply Now" variant="brand" onclick={handleApply}></lightning-button>
+                        <lightning-button label="Back to List" variant="neutral" onclick={handleBackbtn}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    
+        <template if:false={campaign}>
+            <p>Error</p>
+        </template>
+    </template>

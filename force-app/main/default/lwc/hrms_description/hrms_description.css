@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'times new roman', sans-serif;
+    background: #0a0a0a;
+    color: #f1c40f;
+    box-sizing: border-box;
+}
+
+.campaign-poster {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   overflow: hidden;
+    background: url('https://source.unsplash.com/1600x900/?dark,office') no-repeat center center/cover;
+    text-align: center;
+}
+
+.poster-content {
+    background: rgba(20, 20, 20, 0.6);
+    padding: 50px;
+    border-radius: 12px;
+    width:100vw;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+   
+    text-align: center;
+    border: 2px solid rgba(255, 204, 0, 0.5);
+}
+
+.campaign-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #f1c40f;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.campaign-description {
+    font-size: 1.2rem;
+    color: #dddddd;
+    margin-bottom: 25px;
+    line-height: 1.8;
+    font-weight: 300;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #bbbbbb;
+    margin: 10px 0;
+}
+
+strong {
+    color: #f1c40f;
+    font-weight: 600;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+lightning-button {
+    transition: all 0.3s ease;
+   
+    color: #0a0a0a;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+lightning-button:hover {
+   
+    transform: scale(1.08);
+}
+
+@media (max-width: 768px) {
+    .poster-content {
+        max-width: 95%;
+        padding: 30px;
+    }
+
+    .campaign-title {   
+        font-size: 2.5rem;
+    }
+}

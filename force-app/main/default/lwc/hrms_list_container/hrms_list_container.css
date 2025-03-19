@@ -1,0 +1,109 @@
+.campaign-container {
+    display: flex;
+    flex-direction: column; /* One card per row */
+    gap: 25px;
+    padding: 20px;
+}
+
+/* Elegant Card */
+.campaign-card {
+    width: 100%;
+    background: linear-gradient(135deg, #1a1f36, #2a2f4e); /* Deep Blue Gradient */
+    border-radius: 15px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.15);
+    padding: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: 2px solid #ffc107; /* Gold Border */
+    position: relative;
+    overflow: hidden;
+    color: white;
+}
+
+/* Hover effect */
+.campaign-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0px 10px 24px rgba(255, 193, 7, 0.25);
+    background: linear-gradient(135deg, #292f49, #3b4165); /* Soft Blue Hover */
+}
+
+/* Gold Line at the top */
+.campaign-card::before {
+    content: "";
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, #ffc107, #ff9800);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Job Title - Standout */
+.campaign-header h2 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ffc107; /* Gold */
+    text-transform: uppercase;
+    border-bottom: 4px solid #ff9800; /* Gold Border */
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+/* Job Description */
+.campaign-description {
+    font-size: 20px;
+    color: #ddd;
+    font-weight: 500;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    border-left: 5px solid #ffc107; /* Left Gold Highlight */
+}
+
+/* Job Details Section */
+.campaign-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    background: rgba(255, 193, 7, 0.15); /* Light Gold Tint */
+    padding: 15px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+/* Hover effect for detail boxes */
+.campaign-card:hover .campaign-details {
+    background: rgba(255, 193, 7, 0.25);
+}
+
+/* Labels & Values */
+.campaign-column {
+    flex: 1;
+    text-align: left;
+    padding: 8px;
+}
+
+/* Bigger & Bold Labels */
+.campaign-column strong {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffc107; /* Gold */
+    text-transform: uppercase;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .campaign-card {
+        width: 100%;
+    }
+
+    .campaign-details {
+        flex-direction: column;
+    }
+
+    .campaign-column {
+        margin-bottom: 8px;
+    }
+}
