@@ -6,7 +6,7 @@ body {
     color: #f1c40f;
     box-sizing: border-box;
 }
-
+    
 .campaign-poster {
     display: flex;
     justify-content: center;
