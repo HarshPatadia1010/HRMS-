@@ -22,7 +22,9 @@ export default class Hrms_description extends LightningElement {
     handleBackbtn(event){
         this.dispatchEvent(new CustomEvent('backbtnclick'));
     }
-    handleApplybtn(event){
-      //form redirect
+    handleApply(event){
+        this.dispatchEvent(new CustomEvent('applybtnclick',{detail:{campaignId:this.campaignid}}));
+        //const applyEvent = new CustomEvent('applybtnclick',{detail:{campaignId:this.campaignid}});
+        //this.dispatchEvent(applyEvent);
     }
 }

@@ -39,7 +39,11 @@
     </lightning-card>
  </template>
        
-       <template if:false={isListVisible}>
-        <c-hrms_description campaignid={selectedCampaignId} onbackbtnclick={backToList} ></c-hrms_description>
+       <template if:true={isDescriptionVisible}>
+        <c-hrms_description campaignid={selectedCampaignId} onbackbtnclick={backToList} onapplybtnclick={handleApplyBtnClick} ></c-hrms_description>
 
+        </template>
+        <template if:true={showQuestionForm}>
+            <c-hrms_question_form record-id={selectedCampaignId} onbackbtnclick={handleBack}></c-hrms_question_form>
+        </template>
 </template>
