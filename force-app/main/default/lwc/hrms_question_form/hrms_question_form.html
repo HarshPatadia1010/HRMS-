@@ -1,61 +1,78 @@
 <template>
-    <lightning-card title="Question form">
-        <!-- personal details-->
-        <template if:true={personalDetails}>
-            <div class="slds-p-around_medium">
-                <h3>Personal Details</h3>
-                <lightning-input
-                    label="First Name"
-                    name="First_Name"
-                    type="text"
-                    onchange={handlePersonalInputChange}>
-                </lightning-input>
+    <div class="form-container">
+        <div class="form-card">
+            <h1 class="section-title">Question Form</h1>
 
-                <lightning-input
-                    label="Last Name"
-                    name="Last_Name"
-                    type="text"
-                    onchange={handlePersonalInputChange}>
-                </lightning-input>
+            <!-- 🏷 Personal Details Section -->
+            <template if:true={personalDetails}>
+                <div class="slds-p-around_medium">
+                    <h3 class="section-title">Personal Details</h3>
 
-                <lightning-input
-                    label="Email"
-                    name="Email"
-                    type="email"
-                    onchange={handlePersonalInputChange}>
-                </lightning-input>
-
-                <lightning-input
-                    label="Phone"
-                    name="Phone"
-                    type="tel"
-                    onchange={handlePersonalInputChange}>
-                </lightning-input>
-            </div>
-        </template>
-        <!--campaig related questions-->
-        <template if:true={questions}>
-            <div class="slds-p-around_medium">
-                <h3>Campaign-Specific Questions</h3>
-                <template for:each={questions} for:item="question">
-                    <div key={question.Id} class="slds-p-bottom_small">
-                        <label class="slds-form-element__label">{question.question_text__c}</label>
-                        <lightning-textarea
-                            data-id={question.Id}
-                            value={question.Answer__c}
-                            onchange={handleDynamicInputChange}>
-                        </lightning-textarea>
+                    <div class="form-field">
+                        <lightning-input
+                            label="First Name"
+                            name="First_Name"
+                            type="text"
+                            onchange={handlePersonalInputChange}>
+                        </lightning-input>
                     </div>
-                </template>
-            </div>
-        </template>
-        <!-- Submit Button -->
-        <lightning-button
-            label="Submit"
-            variant="brand"
-            onclick={handleSubmit}>
-        </lightning-button>
-        <lightning-button label="Back" onclick={handleBack}></lightning-button>
 
-    </lightning-card>
+                    <div class="form-field">
+                        <lightning-input
+                            label="Last Name"
+                            name="Last_Name"
+                            type="text"
+                            onchange={handlePersonalInputChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="form-field">
+                        <lightning-input
+                            label="Email"
+                            name="Email"
+                            type="email"
+                            onchange={handlePersonalInputChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="form-field">
+                        <lightning-input
+                            label="Phone"
+                            name="Phone"
+                            type="tel"
+                            onchange={handlePersonalInputChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <!-- 🎯 Campaign-Specific Questions -->
+            <template if:true={questions}>
+                <div class="slds-p-around_medium question-container">
+                    <h3 class="section-title">Campaign-Specific Questions</h3>
+                    <template for:each={questions} for:item="question">
+                        <div key={question.Id} class="slds-p-bottom_small form-field">
+                            <label class="slds-form-element__label">{question.question_text__c}</label>
+                            <lightning-textarea
+                                data-id={question.Id}
+                                value={question.Answer__c}
+                                onchange={handleDynamicInputChange}>
+                            </lightning-textarea>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- 🔘 Buttons -->
+            <div class="button-group">
+                <lightning-button
+                    label="Submit"
+                    variant="brand"
+                    onclick={handleSubmit}>
+                </lightning-button>
+                
+                <lightning-button label="Back" variant="neutral" onclick={handleBack}></lightning-button>
+            </div>
+        </div>
+    </div>
 </template>
