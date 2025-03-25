@@ -6,11 +6,11 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class Hrms_question_form extends LightningElement {
     @api recordId;
     @track questions = [];
-    @track answers = {}; // Ensure this is defined to avoid undefined errors
-    @track FirstName;
-    @track LastName;
-    @track Email;
-    @track Phone;
+    @track answers = {};
+    @track FirstName = '';
+    @track LastName = '';
+    @track Email = '';
+    @track Phone = '';
 
     connectedCallback() {
         this.loadQuestions();
@@ -27,49 +27,56 @@ export default class Hrms_question_form extends LightningElement {
             });
     }
 
-    // Handle input for personal details
+    // Handle personal details input
     handlePersonalInputChange(event) {
-        if (event && event.target) {
-            const field = event.target.name;
-            const value = event.target.value;
-
-            if (field === 'FirstName') {
-                this.FirstName = value;
-            } else if (field === 'LastName') {
-                this.LastName = value;
-            } else if (field === 'Email') {
-                this.Email = value;
-            } else if (field === 'Phone') {
-                this.Phone = value;
-            }
+        const field = event.target.name;
+        const value = event.target.value.trim(); // Trim spaces to avoid empty inputs
+    
+        if (field === 'First_Name') {
+            this.FirstName = value;
+        } else if (field === 'Last_Name') {
+            this.LastName = value;
+        } else if (field === 'Email') {
+            this.Email = value;
+        } else if (field === 'Phone') {
+            this.Phone = value;
         }
     }
+    
 
-    // Handle input for dynamic campaign-specific questions
+    // Handle dynamic question responses
     handleDynamicInputChange(event) {
-        if (event && event.target) {
-            const questionId = event.target.dataset.id;
-            const answer = event.target.value;
-
-            this.answers = { ...this.answers, [questionId]: answer };
-        }
+        this.answers = { ...this.answers, [event.target.dataset.id]: event.target.value };
     }
 
     // Handle form submission
     handleSubmit() {
+        console.log('First Name:', this.FirstName);
+        console.log('Last Name:', this.LastName);
+        console.log('Email:', this.Email);
+        console.log('Phone:', this.Phone);
+        console.log('Answers:', JSON.stringify(this.answers));
+    
+        // Check for missing personal details
+        if (!this.FirstName || !this.LastName || !this.Email || !this.Phone) {
+            this.showToast('Error', 'Please fill in all personal details.', 'error');
+            return;
+        }
+    
+        // Check if at least one question is answered
         if (!this.answers || Object.keys(this.answers).length === 0) {
             this.showToast('Error', 'No answers provided. Please fill out the form.', 'error');
             return;
         }
-
-        const leadDetails = {
+    
+       /* const leadDetails = {
             FirstName: this.FirstName,
             LastName: this.LastName,
             Email: this.Email,
             Phone: this.Phone
-        };
-
-        saveAnswers({ questionAnswers: this.answers, leadDetails, campaignId: this.recordId })
+        };*/
+    
+        saveAnswers({ questionAnswers: this.answers, firstName: this.FirstName,lastName: this.LastName,email:this.Email,phone:this.Phone, campaignId: this.recordId })
             .then(() => {
                 this.showToast('Success', 'Application submitted successfully!', 'success');
                 this.clearForm();
@@ -79,24 +86,17 @@ export default class Hrms_question_form extends LightningElement {
                 console.error('Error saving answers:', error);
             });
     }
-
+    
     // Show toast notifications
     showToast(title, message, variant) {
-        const toastEvent = new ShowToastEvent({
-            title,
-            message,
-            variant
-        });
-        this.dispatchEvent(toastEvent);
+        this.dispatchEvent(new ShowToastEvent({ title, message, variant }));
     }
 
-    // Clear the form after submission
+    // Clear form after submission
     clearForm() {
-        if (this.template) {
-            this.template.querySelectorAll('lightning-input, lightning-textarea').forEach(input => {
-                input.value = ''; // Clear input fields
-            });
-        }
+        this.template.querySelectorAll('lightning-input, lightning-textarea').forEach(input => {
+            input.value = '';
+        });
 
         this.FirstName = '';
         this.LastName = '';
@@ -105,7 +105,7 @@ export default class Hrms_question_form extends LightningElement {
         this.answers = {};
     }
 
-    handleBack(event) {
+    handleBack() {
         this.dispatchEvent(new CustomEvent('backbtnclick'));
     }
 }

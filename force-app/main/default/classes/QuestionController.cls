@@ -7,36 +7,43 @@ public with sharing class QuestionController {
             WHERE Campaing__c = :campaignId
         ];
     }
-/*
+
     @AuraEnabled
-    public static void saveAnswers(Map<Id, String> questionAnswers) {
-        List<Questions__c> questionsToUpdate = new List<Questions__c>();
+    public static void saveAnswers(Map<Id, String> questionAnswers, String firstName, String lastName, String email, String phone, Id campaignId) {
+        // Create a new lead
         
-        for (Id questionId : questionAnswers.keySet()) {
-            Questions__c question = new Questions__c(Id = questionId, Answer__c = questionAnswers.get(questionId));
-            questionsToUpdate.add(question);
-        }
+        System.debug('questionAnswers--'+questionAnswers);
+        System.debug('firstName--'+firstName);
+        System.debug('lastName--'+lastName);
+        System.debug('email--'+email);
+        System.debug('phone--'+phone);
+        System.debug('campaignId--'+campaignId);
+        
+        Lead newLead = new Lead(
+            FirstName = firstName,
+            LastName = lastName,
+            Email = email,
+            Phone = phone,
+            Campaign__c = campaignId,
+            Company = 'Unspecified'
+     
+        );
+        insert newLead;
 
-        update questionsToUpdate;
-    }
-        */
-    @AuraEnabled
-    public static void saveAnswers(Map<Id, String> questionAnswers, Lead leadDetails, Id campaignId) {
-        //insert leadDetails
-        insert leadDetails;
-
-        //insert response
+        // Insert responses
         List<Response__c> responses = new List<Response__c>();
         for (Id questionId : questionAnswers.keySet()) {
             Response__c response = new Response__c(
                 Question__c = questionId,
                 Answer__c = questionAnswers.get(questionId),
-                Lead__c = leadDetails.Id,
-                Campaign__c = campaignId
+                Lead__c = newLead.Id,  // Link response to Lead
+                Campaign__c = campaignId // Link to Campaign
             );
             responses.add(response);
         }
-        insert responses;
-
-}
+        
+        if (!responses.isEmpty()) {
+            insert responses;
+        }
+    }
 }
