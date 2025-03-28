@@ -9,16 +9,7 @@ public with sharing class QuestionController {
     }
 
     @AuraEnabled
-    public static void saveAnswers(Map<Id, String> questionAnswers, String firstName, String lastName, String email, String phone, Id campaignId) {
-        // Create a new lead
-        
-        System.debug('questionAnswers--'+questionAnswers);
-        System.debug('firstName--'+firstName);
-        System.debug('lastName--'+lastName);
-        System.debug('email--'+email);
-        System.debug('phone--'+phone);
-        System.debug('campaignId--'+campaignId);
-        
+    public static String saveAnswers(Map<Id, String> questionAnswers, String firstName, String lastName, String email, String phone, Id campaignId) {
         Lead newLead = new Lead(
             FirstName = firstName,
             LastName = lastName,
@@ -26,24 +17,47 @@ public with sharing class QuestionController {
             Phone = phone,
             Campaign__c = campaignId,
             Company = 'Unspecified'
-     
         );
         insert newLead;
 
-        // Insert responses
         List<Response__c> responses = new List<Response__c>();
         for (Id questionId : questionAnswers.keySet()) {
-            Response__c response = new Response__c(
+            responses.add(new Response__c(
                 Question__c = questionId,
                 Answer__c = questionAnswers.get(questionId),
-                Lead__c = newLead.Id,  // Link response to Lead
-                Campaign__c = campaignId // Link to Campaign
-            );
-            responses.add(response);
+                Lead__c = newLead.Id,
+                Campaign__c = campaignId
+            ));
         }
-        
         if (!responses.isEmpty()) {
             insert responses;
         }
+
+        return newLead.Id;
+    }
+
+    @AuraEnabled
+    public static void saveFile(String fileName, String base64Data, String recordId) {
+        ContentVersion contentVersion = new ContentVersion(
+            Title = fileName,
+            VersionData = EncodingUtil.base64Decode(base64Data),
+            PathOnClient = fileName
+        );
+        insert contentVersion;
+
+         // Fetch ContentDocumentId using SOQL
+    ContentDocument contentDocument = [
+        SELECT Id FROM ContentDocument WHERE Id IN 
+        (SELECT ContentDocumentId FROM ContentVersion WHERE Id = :contentVersion.Id)
+        LIMIT 1
+    ];
+
+        ContentDocumentLink link = new ContentDocumentLink(
+            LinkedEntityId = recordId,
+            ContentDocumentId = contentDocument.Id,
+            ShareType = 'V',
+            Visibility = 'AllUsers'
+        );
+        insert link;
     }
 }

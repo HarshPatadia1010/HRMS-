@@ -1,67 +1,36 @@
 <template>
-    <lightning-card title="Question form">
-        <!-- personal details-->
-        
-            <div class="slds-p-around_medium">
+    <lightning-card title="Question Form">
+        <!-- Personal Details -->
+        <div class="slds-p-around_medium">
+            <h3>Personal Details</h3>
+            
+            <lightning-input label="First Name" name="First_Name" type="text" value={FirstName} onchange={handlePersonalInputChange}></lightning-input>
+            <lightning-input label="Last Name" name="Last_Name" type="text" value={LastName} onchange={handlePersonalInputChange}></lightning-input>
+            <lightning-input label="Email" name="Email" type="email" value={Email} onchange={handlePersonalInputChange}></lightning-input>
+            <lightning-input label="Phone" name="Phone" type="tel" value={Phone} onchange={handlePersonalInputChange}></lightning-input>
+        </div>
 
-                <h3>Personal Details</h3>
-                
-                <lightning-input
-                    label="First Name"
-                    name="First_Name"
-                    type="text"
-                    value={FirstName}
-                    onchange={handlePersonalInputChange}>
-                </lightning-input>
+        <!-- File Upload Section -->
+        <div class="slds-p-around_medium">
+            <h3>Upload File</h3>
+            <lightning-input type="file" label="Upload File" accept=".pdf,.doc,.docx,.png,.jpg" onchange={handleFileChange}></lightning-input>
+        </div>
 
-                <lightning-input
-                    label="Last Name"
-                    name="Last_Name"
-                    type="text"
-                    value={LastName}
-                    onchange={handlePersonalInputChange}>
-                   
-                </lightning-input>
-              
-                <lightning-input
-                    label="Email"
-                    name="Email"
-                    type="email"
-                    value={Email}
-                    onchange={handlePersonalInputChange}>
-                </lightning-input>
-
-                <lightning-input
-                    label="Phone"
-                    name="Phone"
-                    type="tel"
-                    value={Phone}
-                    onchange={handlePersonalInputChange}>
-                </lightning-input>
-            </div>
-        
-        <!--campaig related questions-->
+        <!-- Campaign Related Questions -->
         <template if:true={questions}>
             <div class="slds-p-around_medium">
                 <h3>Campaign-Specific Questions</h3>
                 <template for:each={questions} for:item="question">
                     <div key={question.Id} class="slds-p-bottom_small">
                         <label class="slds-form-element__label">{question.question_text__c}</label>
-                        <lightning-textarea
-                            data-id={question.Id}
-                            value={question.Answer__c}
-                            onchange={handleDynamicInputChange}>
-                        </lightning-textarea>
+                        <lightning-textarea data-id={question.Id} value={question.Answer__c} onchange={handleDynamicInputChange}></lightning-textarea>
                     </div>
                 </template>
             </div>
         </template>
+
         <!-- Submit Button -->
-        <lightning-button
-            label="Submit"
-            variant="brand"
-            onclick={handleSubmit}>
-        </lightning-button>
+        <lightning-button label="Submit" variant="brand" onclick={handleSubmit}></lightning-button>
         <lightning-button label="Back" onclick={handleBack}></lightning-button>
 
     </lightning-card>
