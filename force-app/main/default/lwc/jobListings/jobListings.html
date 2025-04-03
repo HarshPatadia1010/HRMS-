@@ -1,0 +1,21 @@
+<template>
+    <c-job-search onsearch={handleSearch}></c-job-search>
+
+    <div class="job-list-container">
+        <h2 class="section-title">Latest Job Openings</h2>
+
+        <div class="job-grid">
+            <template for:each={filteredJobs} for:item="job">
+                <div key={job.Id} class="job-card">
+                    <h3>{job.Name}</h3>
+                    <p class="job-description">{job.Job_Description__c}</p>
+                    <p><strong>Location:</strong> {job.Job_Location__c}</p>
+                    <p><strong>Salary:</strong> {job.Salary__c}</p>
+                    <p><strong>Experience:</strong> {job.Experience__c} years</p>
+                    <p><strong>Mode:</strong> {job.Job_Mode__c}</p>
+                    <lightning-button label="Apply Now" variant="brand" onclick={handleApply}></lightning-button>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

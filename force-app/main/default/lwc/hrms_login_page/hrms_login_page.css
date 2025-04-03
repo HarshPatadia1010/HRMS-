@@ -1,0 +1,205 @@
+/* workforce360Register.css */
+.register-container {
+    min-height: 100vh;
+    color: white;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.register-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.brand-header {
+    background: var(--brand-primary, #4a00e0);
+    padding: 2rem;
+    text-align: center;
+}
+
+.logo-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
+.register-form {
+    background: white;
+    color: var(--slds-g-color-neutral-base-10, #181818);
+    padding: 2rem;
+}
+
+.register-form h2 {
+    color: var(--brand-primary, #4a00e0);
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.register-button {
+    width: 100%;
+    --sds-c-button-brand-color-background: var(--brand-primary, #4a00e0);
+    --sds-c-button-brand-color-border: var(--brand-primary, #4a00e0);
+    --sds-c-button-brand-color-background-hover: var(--brand-primary-dark, #3a00b0);
+    --sds-c-button-brand-color-border-hover: var(--brand-primary-dark, #3a00b0);
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Input field styling */
+lightning-input {
+    --sds-c-input-shadow: 0 0 0 1px #dddbda inset;
+    --sds-c-input-shadow-focus: 0 0 0 2px var(--brand-primary, #4a00e0) inset;
+    --sds-c-input-radius-border: 6px;
+    --sds-c-input-color-border-focus: var(--brand-primary, #4a00e0);
+}
+
+lightning-input::part(input) {
+    padding: 0.75rem 1rem;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.register-card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Login Page Container */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e6f0ff;
+    position: relative;
+    padding: 2rem;
+}
+
+/* Decorative Elements */
+.decorative-character {
+    position: absolute;
+    width: 180px;
+    height: auto;
+    left: calc(50% - 450px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.decorative-plant {
+    position: absolute;
+    width: 120px;
+    height: auto;
+    right: calc(50% - 450px);
+    bottom: 20%;
+}
+
+/* Login Card */
+.login-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    z-index: 1;
+}
+
+.brand-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f0f7ff;
+    border-radius: 8px;
+}
+
+.brand-header h1 {
+    color: #2c5282;
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.brand-header p {
+    color: #4a5568;
+    font-size: 1rem;
+}
+
+/* Form Elements */
+.form-input {
+    margin-bottom: 1.25rem;
+}
+
+lightning-input {
+    --sds-c-input-shadow: 0 0 0 1px #e2e8f0 inset;
+    --sds-c-input-shadow-focus: 0 0 0 2px #63b3ed inset;
+    --sds-c-input-radius-border: 6px;
+    --sds-c-input-color-border-focus: #63b3ed;
+}
+
+.login-button {
+    width: 100%;
+    height: 44px;
+    background: #4299e1;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.login-button:hover {
+    background: #3182ce;
+}
+
+.slds-text-link {
+    color: #4299e1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.slds-text-link:hover {
+    text-decoration: underline;
+    color: #3182ce;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .decorative-character {
+        left: 5%;
+        width: 140px;
+    }
+    
+    .decorative-plant {
+        right: 5%;
+        width: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .decorative-character,
+    .decorative-plant {
+        display: none;
+    }
+    
+    .login-card {
+        margin: 1rem;
+    }
+}

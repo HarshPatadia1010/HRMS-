@@ -1,0 +1,157 @@
+.register-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e6f0ff;
+    position: relative;
+    padding: 2rem;
+}
+
+/* Decorative Elements */
+.decorative-character {
+    position: absolute;
+    width: 180px;
+    height: auto;
+    left: calc(50% - 450px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.decorative-plant {
+    position: absolute;
+    width: 120px;
+    height: auto;
+    right: calc(50% - 450px);
+    bottom: 20%;
+}
+
+/* Register Card */
+.register-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+    z-index: 1;
+}
+
+.brand-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f0f7ff;
+    border-radius: 8px;
+}
+
+.brand-header h1 {
+    color: #2c5282;
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.brand-header p {
+    color: #4a5568;
+    font-size: 1rem;
+}
+
+/* Form Elements */
+.register-form {
+    padding: 0 1rem;
+}
+
+.form-input {
+    margin-bottom: 1.25rem;
+}
+
+lightning-input,
+lightning-combobox {
+    --sds-c-input-shadow: 0 0 0 1px #e2e8f0 inset;
+    --sds-c-input-shadow-focus: 0 0 0 2px #63b3ed inset;
+    --sds-c-input-radius-border: 6px;
+    --sds-c-input-color-border-focus: #63b3ed;
+}
+
+.password-requirements {
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: -0.5rem;
+}
+
+.password-requirements ul {
+    margin-top: 0.5rem;
+    margin-left: 1.5rem;
+}
+
+.password-requirements li {
+    margin-bottom: 0.25rem;
+    color: #718096;
+}
+
+.terms-section {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1rem;
+}
+
+.register-button {
+    width: 100%;
+    height: 44px;
+    background: #4299e1;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.register-button:hover:not(:disabled) {
+    background: #3182ce;
+}
+
+.register-button:disabled {
+    background: #a0aec0;
+    cursor: not-allowed;
+}
+
+.slds-text-link {
+    color: #4299e1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.slds-text-link:hover {
+    text-decoration: underline;
+    color: #3182ce;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .decorative-character {
+        left: 5%;
+        width: 140px;
+    }
+    
+    .decorative-plant {
+        right: 5%;
+        width: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .decorative-character,
+    .decorative-plant {
+        display: none;
+    }
+    
+    .register-card {
+        margin: 1rem;
+    }
+
+    .register-form {
+        padding: 0;
+    }
+} 

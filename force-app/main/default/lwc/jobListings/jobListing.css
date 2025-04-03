@@ -1,0 +1,42 @@
+.job-list-container {
+    width: 100%;
+    padding: 50px 5%;
+    background: linear-gradient(135deg, #ffffff, #f1f8ff);
+    text-align: center;
+}
+
+.section-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #0d47a1;
+    margin-bottom: 20px;
+}
+
+.job-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+.job-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+}
+
+.job-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+lightning-button {
+    margin-top: 10px;
+}

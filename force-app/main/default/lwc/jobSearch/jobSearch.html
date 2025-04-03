@@ -1,0 +1,17 @@
+<template>
+    <div class="search-container">
+        <div class="search-card">
+            <div class="search-header">
+                <h2>Find Your Dream Job</h2>
+                <p>Search from thousands of jobs available</p>
+            </div>
+
+            <div class="search-fields">
+                <lightning-input type="text" value={searchTitle} onchange={handleTitleChange} placeholder="Job title"></lightning-input>
+                <lightning-input type="text" value={searchLocation} onchange={handleLocationChange} placeholder="Location"></lightning-input>
+                <lightning-button label="Search Jobs" variant="brand" onclick={handleSearch}></lightning-button>
+            </div>
+            
+        </div>
+    </div>
+</template>
