@@ -36,6 +36,7 @@ export default class Hrms_description extends NavigationMixin(LightningElement) 
     connectedCallback() {
         console.log('Description component initialized with Campaign ID:', this.campaignid);
         console.log('Current User ID:', this.currentUserId);
+   
     }
     
   
@@ -44,13 +45,19 @@ export default class Hrms_description extends NavigationMixin(LightningElement) 
         if (this.currentUserId) {
             // User is logged in, proceed to question form
             console.log('User is logged in, navigating to question form');
-            this.dispatchEvent(new CustomEvent('applybtnclick', {detail: {campaignId: this.campaignid}}));
+            console.log('apply function camp id', this.campaignid);
+            
              // Navigate to application-form page with return URL
              this[NavigationMixin.Navigate]({
                 type: 'standard__webPage',
                 attributes: {
-                    url: `/application-form?returnUrl=/description?campaignId=${this.campaignid}`
+                    url: `/application-form?campaignId=${this.campaignid}`
                 }
+                
+                
+                
+                
+                
             });
         } else {
             // User is not logged in, redirect to login page
@@ -61,6 +68,7 @@ export default class Hrms_description extends NavigationMixin(LightningElement) 
                 type: 'standard__webPage',
                 attributes: {
                     url: `/login?returnUrl=/description?campaignId=${this.campaignid}`
+                    
                 }
             });
            

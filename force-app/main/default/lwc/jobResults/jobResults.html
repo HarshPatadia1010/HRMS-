@@ -10,7 +10,7 @@
         <div class="job-grid">
             <template for:each={filteredJobs} for:item="job">
                 <div key={job.Id} class="job-card">
-                    <div class="job-title" onclick={handleCampaignClick} data-id={job.Id}>
+                    <div class="job-title" onclick={handleCampaignClick}  data-id={job.Id}>
                         <a class="job-link">{job.Name}</a>
                     </div>
                     <p class="job-description">{job.Job_Description__c}</p>

@@ -22,4 +22,5 @@ export default class JobListing extends LightningElement {
             (location ? job.Job_Location__c?.toLowerCase().includes(location) : true)
         );
     }
+    
 }

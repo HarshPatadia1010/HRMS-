@@ -13,7 +13,7 @@ export default class JobResults extends NavigationMixin(LightningElement) {
         console.log('Initial Campaign ID:', this.campaignId);
     }
 
-    @wire(CurrentPageReference)
+    @wire(CurrentPageReference) 
     getPageRef(pageRef) {
         if (pageRef) {
             const params = new URLSearchParams(window.location.search);
@@ -71,4 +71,6 @@ export default class JobResults extends NavigationMixin(LightningElement) {
             }
         });
     }
+
+    
 }
