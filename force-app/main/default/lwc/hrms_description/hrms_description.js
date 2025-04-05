@@ -7,57 +7,61 @@ import userId from '@salesforce/user/Id'; // Fetches the current user's Id
 
 export default class Hrms_description extends NavigationMixin(LightningElement) {
 
-    @api campaignid;
+    @api campaignId;
     @track campaign;
     @track currentUserId = userId;
+
+    connectedCallback() {
+        console.log('Description component initialized');
+        console.log('Campaign ID from API:', this.campaignId);
+        console.log('Current URL:', window.location.href);
+    }
 
     @wire(CurrentPageReference)
     getPageRef(pageRef) {
         if (pageRef) {
+            console.log('Page Reference:', pageRef);
             const params = new URLSearchParams(window.location.search);
-            const urlCampaignId = params.get('campaignId') || '';
+            const urlCampaignId = params.get('campaignId');
+            console.log('Campaign ID from URL:', urlCampaignId);
+            
             if (urlCampaignId) {
-                this.campaignid = urlCampaignId;
-                console.log('Campaign ID from URL in description component:', this.campaignid);
+                this.campaignId = urlCampaignId;
+                console.log('Updated Campaign ID from URL:', this.campaignId);
             }
         }
     }
 
-    @wire(CAMPAIGN_DESCRIPTION, { campaignId: '$campaignid' })
+    @wire(CAMPAIGN_DESCRIPTION, { campaignId: '$campaignId' })
     wiredCampaign({ data, error }) {
+        console.log('Wire service called with Campaign ID:', this.campaignId);
+        
         if (data) {
             this.campaign = data;
             console.log('Campaign data loaded:', this.campaign);
         } else if (error) {
             console.error('Error fetching campaign details:', error);
+            this.showToast('Error', 'Failed to load campaign details', 'error');
         }
+
     }
-    
-    connectedCallback() {
-        console.log('Description component initialized with Campaign ID:', this.campaignid);
-        console.log('Current User ID:', this.currentUserId);
-   
-    }
-    
-  
     
     handleApply(event){
+        console.log('Apply button clicked');
+        console.log('Current Campaign ID:', this.campaignId);
+        
         if (this.currentUserId) {
             // User is logged in, proceed to question form
             console.log('User is logged in, navigating to question form');
-            console.log('apply function camp id', this.campaignid);
-            
+            this.dispatchEvent(new CustomEvent('applybtnclick', {
+                detail: { campaignId: this.campaignId }
+            }));
              // Navigate to application-form page with return URL
              this[NavigationMixin.Navigate]({
                 type: 'standard__webPage',
                 attributes: {
-                    url: `/application-form?campaignId=${this.campaignid}`
+                    url: `/application-form?returnUrl=/description?campaignId=${this.campaignId}`
                 }
-                
-                
-                
-                
-                
             });
         } else {
             // User is not logged in, redirect to login page
@@ -67,8 +71,7 @@ export default class Hrms_description extends NavigationMixin(LightningElement) 
              this[NavigationMixin.Navigate]({
                 type: 'standard__webPage',
                 attributes: {
-                    url: `/login?returnUrl=/description?campaignId=${this.campaignid}`
-                    
+                    url: `/login?returnUrl=/description?campaignId=${this.campaignId}`
                 }
             });
            

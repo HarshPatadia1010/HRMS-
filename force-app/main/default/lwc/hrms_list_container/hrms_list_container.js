@@ -23,7 +23,7 @@ export default class Hrms_list_container extends LightningElement {
         const campaignId = event.currentTarget.dataset.id;
         this.selectedCampaignId=campaignId;
         console.log('Clicked Campaign ID:', campaignId);
-        console.log('Selected Campaign ID:', this.selectedCampaignId);
+        // console.log('selectedCampaign ID:',this.selectedCampaignId);
         this.isListVisible = false;
         this.isDescriptionVisible = true;
 
@@ -36,8 +36,6 @@ export default class Hrms_list_container extends LightningElement {
     }
     //function for apply button event
     handleApplyBtnClick(event){
-        console.log('Apply button clicked in list container');
-        console.log('Campaign ID being passed to question form:', this.selectedCampaignId);
         this.isListVisible = false;
         this.isDescriptionVisible = false;
         this.showQuestionForm=true;
