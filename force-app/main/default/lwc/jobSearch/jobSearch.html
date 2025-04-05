@@ -9,9 +9,18 @@
             <div class="search-fields">
                 <lightning-input type="text" value={searchTitle} onchange={handleTitleChange} placeholder="Job title"></lightning-input>
                 <lightning-input type="text" value={searchLocation} onchange={handleLocationChange} placeholder="Location"></lightning-input>
+
+                <!-- Job Mode Dropdown -->
+                <lightning-combobox
+                    label="Job Mode"
+                    value={searchMode}
+                    placeholder="Select Job Mode"
+                    options={jobModeOptions}
+                    onchange={handleModeChange}>
+                </lightning-combobox>
+
                 <lightning-button label="Search Jobs" variant="brand" onclick={handleSearch}></lightning-button>
             </div>
-            
         </div>
     </div>
 </template>

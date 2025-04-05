@@ -40,10 +40,10 @@
  </template>
        
        <template if:true={isDescriptionVisible}>
-        <c-hrms_description campaign-id={selectedCampaignId} onbackbtnclick={backToList} onapplybtnclick={handleApplyBtnClick} ></c-hrms_description>
+        <c-hrms_description campaignid={selectedCampaignId} onbackbtnclick={backToList} onapplybtnclick={handleApplyBtnClick} ></c-hrms_description>
 
         </template>
         <template if:true={showQuestionForm}>
-            <c-hrms_question_form campaign-id={selectedCampaignId} onbackbtnclick={handleBack}></c-hrms_question_form>
+            <c-hrms_question_form record-id={selectedCampaignId} onbackbtnclick={handleBack}></c-hrms_question_form>
         </template>
 </template>

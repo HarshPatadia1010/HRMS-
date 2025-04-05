@@ -4,6 +4,15 @@ import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
 export default class JobSearch extends NavigationMixin(LightningElement) {
     @track searchTitle = '';
     @track searchLocation = '';
+    @track searchMode = '';
+
+    // Job Mode options
+    jobModeOptions = [
+        { label: 'All', value: '' },
+        { label: 'Remote', value: 'Remote' },
+        { label: 'Onsite', value: 'Onsite' },
+        { label: 'Hybrid', value: 'Hybrid' }
+    ];
 
     @wire(CurrentPageReference)
     getPageRef(pageRef) {
@@ -11,6 +20,7 @@ export default class JobSearch extends NavigationMixin(LightningElement) {
             const params = new URLSearchParams(window.location.search);
             this.searchTitle = params.get('title') || '';
             this.searchLocation = params.get('location') || '';
+            this.searchMode = params.get('mode') || '';
         }
     }
 
@@ -22,11 +32,15 @@ export default class JobSearch extends NavigationMixin(LightningElement) {
         this.searchLocation = event.target.value;
     }
 
+    handleModeChange(event) {
+        this.searchMode = event.target.value;
+    }
+
     handleSearch() {
         this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
             attributes: {
-                url: `/jobs?title=${encodeURIComponent(this.searchTitle)}&location=${encodeURIComponent(this.searchLocation)}`
+                url: `/jobs?title=${encodeURIComponent(this.searchTitle)}&location=${encodeURIComponent(this.searchLocation)}&mode=${encodeURIComponent(this.searchMode)}`
             }
         });
     }

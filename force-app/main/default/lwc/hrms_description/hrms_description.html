@@ -1,26 +1,30 @@
 <template>
     <template if:true={campaign}>
         <div class="campaign-container">
-            <div class="campaign-card">
+            <div class="header-section">
                 <h1 class="campaign-title">{campaign.Name}</h1>
-                <pre class="campaign-description">{campaign.Description}</pre>
+                <lightning-button 
+                    class="apply-button"
+                    label="Apply" 
+                    variant="brand" 
+                    onclick={handleApply}>
+                </lightning-button>
+            </div>
+            
+            <div class="campaign-details">
+                <div><strong>Location:</strong> {campaign.Job_Location__c}</div>
+                <div><strong>Level:</strong> Senior</div>
+                <div><strong>Role:</strong> Developer</div>
+            </div>
 
-                <div class="date-container">
-                    <div class="date-box start-date">📅 <strong>Start Date:</strong> {campaign.StartDate}</div>
-                    <div class="date-box end-date">📅 <strong>End Date:</strong> {campaign.EndDate}</div>
-                </div>
+            <div class="salary-range">
+                US${campaign.Salary__c}
+            </div>
 
-                <div class="campaign-details">
-                    <strong>Salary: {campaign.Salary__c}</strong>
-                    <strong>Experience: {campaign.Experience__c}</strong>
-                    <strong>Job Mode: {campaign.Job_Mode__c}</strong>
-                    <strong>Job Location: {campaign.Job_Location__c}</strong>
-                </div>
+            <pre class="campaign-description">{campaign.Description}</pre>
 
-                <div class="button-group">
-                    <lightning-button label="Apply Now" variant="brand" onclick={handleApply}></lightning-button>
-                    
-                </div>
+            <div class="job-id">
+                Job ID: {campaign.Id}
             </div>
         </div>
     </template>
