@@ -1,43 +1,39 @@
-import { LightningElement, wire, track, api } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 import getActiveCampaigns from '@salesforce/apex/CampaignController.getActiveCampaigns';
-import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
-import userId from '@salesforce/user/Id'; // Fetches the current user's Id
+import { NavigationMixin } from 'lightning/navigation';
+import userId from '@salesforce/user/Id';
 
 export default class JobResults extends NavigationMixin(LightningElement) {
-    allJobs = [];
+    @track allJobs = [];
     @track filteredJobs = [];
+    @api campaignId = '';
     searchTitle = '';
     searchLocation = '';
     searchMode = '';
-    @api campaignId = '';
-    @track currentUserId = userId;
+    currentUserId = userId;
 
     connectedCallback() {
-        console.log('Initial Campaign ID:', this.campaignId);
-    }
-
-    @wire(CurrentPageReference)
-    getPageRef(pageRef) {
-        if (pageRef) {
-            const params = new URLSearchParams(window.location.search);
-            this.searchTitle = params.get('title') || '';
-            this.searchLocation = params.get('location') || '';
-            this.searchMode = params.get('mode') || '';
-            const urlCampaignId = params.get('campaignId') || '';
-            if (urlCampaignId) {
-                this.campaignId = urlCampaignId;
-                console.log('Campaign ID from URL:', this.campaignId);
-            }
+        const params = new URLSearchParams(window.location.search);
+        this.searchTitle = params.get('title') || '';
+        this.searchLocation = params.get('location') || '';
+        this.searchMode = params.get('mode') || '';
+        const urlCampaignId = params.get('campaignId') || '';
+        if (urlCampaignId) {
+            this.campaignId = urlCampaignId;
         }
+
+        this.fetchCampaigns();
     }
 
-    @wire(getActiveCampaigns)
-    wiredJobs({ error, data }) {
-        if (data) {
-            this.allJobs = data;
+    async fetchCampaigns() {
+        try {
+            const result = await getActiveCampaigns();
+            const parsed = JSON.parse(result);
+            const campaigns = parsed.records;
+            this.allJobs = campaigns;
             this.filterJobs();
-        } else if (error) {
-            console.error('Error fetching jobs:', error);
+        } catch (error) {
+            console.error('Error fetching campaigns:', error);
         }
     }
 
@@ -49,44 +45,27 @@ export default class JobResults extends NavigationMixin(LightningElement) {
         );
     }
 
-    handleApply(event){
+    handleApply(event) {
         if (this.currentUserId) {
-            // User is logged in, proceed to question form
-            console.log('User is logged in, navigating to question form');
-            
-             // Navigate to application-form page with return URL
-             this[NavigationMixin.Navigate]({
+            this[NavigationMixin.Navigate]({
                 type: 'standard__webPage',
                 attributes: {
-                    url: `/application-form?campaignId=${this.campaignid}`
+                    url: `/application-form?campaignId=${this.campaignId}`
                 }
-                
-                
-                
-                
-                
             });
         } else {
-            // User is not logged in, redirect to login page
-            console.log('User is not logged in, redirecting to login page');
-            this.showToast('Login Required', 'Please log in to apply for this job', 'warning');
-             // Navigate to application-form page with return URL
-             this[NavigationMixin.Navigate]({
+            this[NavigationMixin.Navigate]({
                 type: 'standard__webPage',
                 attributes: {
-                    url: `/login?returnUrl=/description?campaignId=${this.campaignid}`
-                    
+                    url: `/login?returnUrl=/description?campaignId=${this.campaignId}`
                 }
             });
-           
         }
     }
 
     handleCampaignClick(event) {
         const campaignId = event.currentTarget.dataset.id;
         this.campaignId = campaignId;
-        console.log('Job title clicked - Campaign ID:', campaignId);
-        
         this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
             attributes: {

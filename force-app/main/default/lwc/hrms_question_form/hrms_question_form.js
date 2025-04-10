@@ -6,7 +6,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference } from 'lightning/navigation';
 
 export default class Hrms_question_form extends LightningElement {
-    @api campaignId;
+    @api recordId;
     @track questions = [];
     @track answers = {};
     @track FirstName = '';
@@ -15,8 +15,9 @@ export default class Hrms_question_form extends LightningElement {
     @track Phone = '';
     @track currentStep = 1;
     @track errors = {};
+    @track campaignId;
     fileData;
-
+     
 
     get options() {
         return [
@@ -24,112 +25,49 @@ export default class Hrms_question_form extends LightningElement {
             { label: 'NO', value: 'NO' },
         ];
     }
-
-    //connectedCallback() {
-        // console.log('Question Form - Connected Callback');
-        // console.log('Campaign ID from API:', this.campaignId);
-        // console.log('Current URL:', window.location.href);
+    connectedCallback() {
+        // Try to get campaign ID from URL first
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlCampaignId = urlParams.get('campaignId');
         
-        // // Get campaign ID from URL parameters
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const urlCampaignId = urlParams.get('campaignId');
-        // console.log('Campaign ID from URL:', urlCampaignId);
-        
-        // if (urlCampaignId) {
-        //     this.campaignId = urlCampaignId;
-        //     console.log('Using Campaign ID from URL:', this.campaignId);
-        // } else {
-        //     console.log('No Campaign ID in URL, using API value:', this.campaignId);
-        // }
-  //  }
-  connectedCallback() {
-    console.log('Question Form - Connected Callback');
-    console.log('Campaign ID from API:', this.campaignId);
-    console.log('Current URL:', window.location.href);
-    
-    // Get campaign ID from URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlCampaignId = urlParams.get('campaignId');
-    console.log('Campaign ID from URL:', urlCampaignId);
-    
-    if (urlCampaignId) {
-        this.campaignId = urlCampaignId;
-        console.log('Using Campaign ID from URL:', this.campaignId);
-
-        // ✅ Now load the questions
-        this.loadQuestions(); 
-    } else if (this.campaignId) {
-        // ✅ Also load questions if campaignId was passed via @api
-        console.log('No Campaign ID in URL, using API value:', this.campaignId);
-        this.loadQuestions(); 
-    } else {
-        console.error('No campaignId available to fetch questions.');
-    }
-}
-
-    renderedCallback() {
-        console.log('Question Form - Rendered Callback');
-        console.log('Current Campaign ID:', this.campaignId);
+        if (urlCampaignId) {
+            this.campaignId = urlCampaignId;
+            console.log('Campaign ID from URL:', this.campaignId);
+        } else if (this.recordId) {
+            this.campaignId = this.recordId;
+            console.log('Campaign ID from recordId:', this.campaignId);
+        }
     }
 
     @wire(CurrentPageReference)
     getPageRef(pageRef) {
         if (pageRef) {
-            console.log('Page Reference:', pageRef);
-            console.log('Current URL in wire:', window.location.href);
-            
-            // Get campaign ID from URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            const urlCampaignId = urlParams.get('campaignId');
-            console.log('Campaign ID from URL in wire:', urlCampaignId);
+            const params = new URLSearchParams(window.location.search);
+            const urlCampaignId = params.get('campaignId');
             
             if (urlCampaignId) {
                 this.campaignId = urlCampaignId;
-                console.log('Updated Campaign ID from URL in wire:', this.campaignId);
+                console.log('Campaign ID from URL in wire:', this.campaignId);
+            } else if (this.recordId && !this.campaignId) {
+                this.campaignId = this.recordId;
+                console.log('Campaign ID from recordId in wire:', this.campaignId);
             }
         }
-    }   
+    }
 
-    // @wire(getQuestions, { campaignId: '$campaignId' })
-    // wiredQuestions({ error, data }) {
-    //     console.log('Wire service called with Campaign ID:', this.campaignId);
-        
-    //     if (data) {
-    //         console.log('Questions loaded:', data);
-    //         this.questions = data;
-    //     } else if (error) {
-    //         console.error('Error loading questions:', error);
-    //         console.log('Campaign ID used for query:', this.campaignId);
-    //         this.showToast('Error', 'Failed to load questions.', 'error');
-    //     }
-    // }
+    @wire(getQuestions, { campaignId: '$campaignId' })
+    wiredQuestions({ error, data }) {
+        if (data) {
+            console.log('Questions loaded:', data);
+            this.questions = data;
+        } else if (error) {
+            console.error('Error loading questions:', error);
+            console.log('Campaign ID used for query:', this.campaignId);
+            this.showToast('Error', 'Failed to load questions.', 'error');
+        }
+    }
 
     // Getters for step visibility
-   
-    loadQuestions() {
-        if (!this.campaignId) {
-            console.error('No campaign ID available to fetch questions.');
-            return;
-        }
-    
-        getQuestions({ campaignId: this.campaignId })
-            .then(data => {
-                console.log('Questions loaded:', data);
-                this.questions = data;
-            })
-            .catch(error => {
-                console.error('Error loading questions:', error);
-                this.showToast('Error', 'Failed to load questions.', 'error');
-            });
-    }
-    
-
-
-
-
-
-
-   
     get isStep1() {
         return this.currentStep === 1;
     }

@@ -1,0 +1,264 @@
+<template>
+    <div class="onboarding-form-container">
+        <h1 class="onboarding-form-title">🚀 Onboarding</h1>
+        
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="progress-steps">
+                <div class={progressStepClass1}>
+                    <span class="step-number">1</span>
+                    <span class="step-label">Personal Info</span>
+                </div>
+                <div class={progressStepClass2}>
+                    <span class="step-number">2</span>
+                    <span class="step-label">Experience</span>
+                </div>
+                <div class={progressStepClass3}>
+                    <span class="step-number">3</span>
+                    <span class="step-label">Education</span>
+                </div>
+                <div class={progressStepClass4}>
+                    <span class="step-number">4</span>
+                    <span class="step-label">Skills</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Steps -->
+        <div class="onboarding-form">
+            <!-- Step 1: Personal Info -->
+            <div class="form-step" if:true={showStep1}>
+                <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <lightning-input 
+                        name="FirstName__c" 
+                        onchange={handleChange}
+                        class="form-input"
+                        variant="label-hidden">
+                    </lightning-input>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <lightning-input 
+                        name="LastName__c" 
+                        onchange={handleChange}
+                        class="form-input"
+                        variant="label-hidden">
+                    </lightning-input>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <lightning-input 
+                        type="email"
+                        name="Email__c" 
+                        onchange={handleChange}
+                        class="form-input"
+                        variant="label-hidden">
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Step 2: Experience -->
+            <div class="form-step" if:true={showStep2}>
+                <div class="form-group">
+                    <label class="form-label">Years of Experience</label>
+                    <lightning-input 
+                        type="number"
+                        name="YearsOfExperience__c" 
+                        onchange={handleChange}
+                        class="form-input"
+                        variant="label-hidden">
+                    </lightning-input>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Current Company</label>
+                    <lightning-input 
+                        name="CurrentCompany__c" 
+                        onchange={handleChange}
+                        class="form-input"
+                        variant="label-hidden">
+                    </lightning-input>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Current Role</label>
+                    <lightning-input 
+                        name="CurrentRole__c" 
+                        onchange={handleChange}
+                        class="form-input"
+                        variant="label-hidden">
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Step 3: Education -->
+            <div class="form-step" if:true={showStep3}>
+                <div class="form-group">
+                    <label class="form-label">Highest Degree</label>
+                    <lightning-input 
+                        name="HighestDegree__c" 
+                        onchange={handleChange}
+                        class="form-input"
+                        variant="label-hidden">
+                    </lightning-input>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">University</label>
+                    <lightning-input 
+                        name="University__c" 
+                        onchange={handleChange}
+                        class="form-input"
+                        variant="label-hidden">
+                    </lightning-input>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Graduation Year</label>
+                    <lightning-input 
+                        type="number"
+                        name="GraduationYear__c" 
+                        onchange={handleChange}
+                        class="form-input"
+                        variant="label-hidden">
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Step 4: Skills -->
+            <div class="form-step" if:true={showStep4}>
+                <div class="step-content">
+                    <h2>Skills</h2>
+                    <div class="form-group">
+                        <label for="technicalSkills">Technical Skills</label>
+                        <div class="skills-input-container">
+                            <lightning-input
+                                type="text"
+                                name="technicalSkill"
+                                label=""
+                                value={currentTechnicalSkill}
+                                onchange={handleSkillChange}
+                                placeholder="Enter a technical skill"
+                            ></lightning-input>
+                            <lightning-button
+                                label="Add"
+                                onclick={addTechnicalSkill}
+                                variant="brand"
+                                class="add-skill-button"
+                            ></lightning-button>
+                        </div>
+                        <div class="skills-list" if:true={technicalSkills.length}>
+                            <h3>Added Technical Skills:</h3>
+                            <ul>
+                                <template for:each={technicalSkills} for:item="skill">
+                                    <li key={skill} class="skill-item">
+                                        {skill}
+                                        <lightning-button-icon
+                                            icon-name="utility:close"
+                                            variant="border-filled"
+                                            alternative-text="Remove"
+                                            onclick={removeTechnicalSkill}
+                                            data-skill={skill}
+                                            class="remove-skill-button"
+                                        ></lightning-button-icon>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="softSkills">Soft Skills</label>
+                        <div class="skills-input-container">
+                            <lightning-input
+                                type="text"
+                                name="softSkill"
+                                label=""
+                                value={currentSoftSkill}
+                                onchange={handleSkillChange}
+                                placeholder="Enter a soft skill"
+                            ></lightning-input>
+                            <lightning-button
+                                label="Add"
+                                onclick={addSoftSkill}
+                                variant="brand"
+                                class="add-skill-button"
+                            ></lightning-button>
+                        </div>
+                        <div class="skills-list" if:true={softSkills.length}>
+                            <h3>Added Soft Skills:</h3>
+                            <ul>
+                                <template for:each={softSkills} for:item="skill">
+                                    <li key={skill} class="skill-item">
+                                        {skill}
+                                        <lightning-button-icon
+                                            icon-name="utility:close"
+                                            variant="border-filled"
+                                            alternative-text="Remove"
+                                            onclick={removeSoftSkill}
+                                            data-skill={skill}
+                                            class="remove-skill-button"
+                                        ></lightning-button-icon>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="certifications">Certifications</label>
+                        <div class="skills-input-container">
+                            <lightning-input
+                                type="text"
+                                name="certification"
+                                label=""
+                                value={currentCertification}
+                                onchange={handleSkillChange}
+                                placeholder="Enter a certification"
+                            ></lightning-input>
+                            <lightning-button
+                                label="Add"
+                                onclick={addCertification}
+                                variant="brand"
+                                class="add-skill-button"
+                            ></lightning-button>
+                        </div>
+                        <div class="skills-list" if:true={certifications.length}>
+                            <h3>Added Certifications:</h3>
+                            <ul>
+                                <template for:each={certifications} for:item="cert">
+                                    <li key={cert} class="skill-item">
+                                        {cert}
+                                        <lightning-button-icon
+                                            icon-name="utility:close"
+                                            variant="border-filled"
+                                            alternative-text="Remove"
+                                            onclick={removeCertification}
+                                            data-skill={cert}
+                                            class="remove-skill-button"
+                                        ></lightning-button-icon>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="form-navigation">
+                <lightning-button 
+                    label="Previous" 
+                    variant="neutral" 
+                    onclick={handlePrevious} 
+                    class="nav-btn"
+                    disabled={isFirstStep}>
+                </lightning-button>
+                <lightning-button 
+                    label={nextButtonLabel} 
+                    variant="brand" 
+                    onclick={handleNextClick} 
+                    class="nav-btn">
+                </lightning-button>
+            </div>
+        </div>
+    </div>
+</template>

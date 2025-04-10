@@ -1,26 +1,11 @@
 public with sharing class QuestionController {
     @AuraEnabled(cacheable=true)
     public static List<Questions__c> getQuestions(Id campaignId) {
-        System.debug('getQuestions called with campaignId: ' + campaignId);
-        
-        if (campaignId == null) {
-            System.debug('Campaign ID is null, returning empty list');
-            return new List<Questions__c>();
-        }
-        
-        try {
-            List<Questions__c> questions = [
-                SELECT Id, question_text__c
-                FROM Questions__c
-                WHERE Campaign__c = :campaignId
-            ];
-            
-            System.debug('Found ' + questions.size() + ' questions for campaign: ' + campaignId);
-            return questions;
-        } catch (Exception e) {
-            System.debug('Error querying questions: ' + e.getMessage());
-            throw new AuraHandledException('Error querying questions: ' + e.getMessage());
-        }
+        return [
+            SELECT Id, question_text__c
+            FROM Questions__c
+            WHERE Campaing__c = :campaignId
+        ];
     }
 
     @AuraEnabled
