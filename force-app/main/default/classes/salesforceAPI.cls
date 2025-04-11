@@ -4,7 +4,7 @@ public with sharing class salesforceAPI {
         String endpoint = 'https://login.salesforce.com/services/oauth2/token?';
         String grant_type = 'password';
         String username = 'salsforceproject.evoqtech@gmail.com';
-        String password = 'Evoqtech@123Y5lUnPfjPoDqfVHPyaVx2kca';
+        String password = 'Evoqtech@123g9DokZgaRulWtHNaDFs1AJ2O';
         String client_id = '3MVG9VMBZCsTL9hlHcTdW2Iuls1NfPposIchTM8oSvjAKyJ_3_4x2DaG_neEAHLw0S9GmfBgsU.vRMp0KRzn1';
         String client_secret = 'DD26D35CD7036B5A39E85DF8085D5A0020479ED8F94B527C771D990D9D71AEC4';
 
@@ -16,7 +16,7 @@ public with sharing class salesforceAPI {
             '&client_id=3MVG9VMBZCsTL9hlHcTdW2Iuls1NfPposIchTM8oSvjAKyJ_3_4x2DaG_neEAHLw0S9GmfBgsU.vRMp0KRzn1' + 
             '&client_secret=DD26D35CD7036B5A39E85DF8085D5A0020479ED8F94B527C771D990D9D71AEC4' + 
             '&username=salsforceproject.evoqtech@gmail.com' + 
-            '&password=Evoqtech@123Y5lUnPfjPoDqfVHPyaVx2kca'
+            '&password=Evoqtech@123g9DokZgaRulWtHNaDFs1AJ2O'
         );
         
         Http http = new Http();
@@ -59,11 +59,12 @@ public with sharing class salesforceAPI {
     }
     
     public class Wrapper {
-        public String access_token { get; set; }
-        public String instance_url { get; set; }
+         String access_token;
+         String instance_url ;
         
-        public Wrapper() {
+        public Wrapper(String access_token) {
             // Default constructor for JSON deserialization
+            this.access_token=access_token;
         }
     }
 }
